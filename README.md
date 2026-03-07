@@ -37,9 +37,11 @@ Run individual layers when you don't need a full audit:
 |---------|-------------|
 | `/workflow-audit layer1` | Discovery — find all UI entry points |
 | `/workflow-audit layer2` | Trace — follow critical user paths |
-| `/workflow-audit layer3` | Issues — detect dead ends, orphaned code |
+| `/workflow-audit layer3` | Issues — detect dead ends, buried buttons, dismiss traps, and more |
 | `/workflow-audit layer4` | Evaluate — assess user impact |
 | `/workflow-audit layer5` | Data wiring — verify real data usage |
+| `/workflow-audit trace "A → B → C"` | Trace a specific user flow path |
+| `/workflow-audit diff` | Compare current findings against previous audit |
 | `/workflow-audit fix` | Generate fixes for found issues |
 | `/workflow-audit status` | Show audit progress |
 
@@ -49,7 +51,7 @@ The workflow audit uses a 5-layer approach:
 
 1. **Pattern Discovery** — Scans for sheet triggers, navigation links, promotion cards, and context menus to build an entry point inventory
 2. **Flow Tracing** — Traces critical user paths from entry to completion, documenting each step
-3. **Issue Detection** — Categorizes problems: dead ends, wrong destinations, mock data, missing feedback, orphaned code
+3. **Issue Detection** — 16 categories including dead ends, buried buttons, dismiss traps, gesture-only actions, loading traps, mock data, and more
 4. **Semantic Evaluation** — Evaluates from the user's perspective: discoverability, efficiency, feedback, recovery
 5. **Data Wiring** — Verifies features use real data, checks for mock/hardcoded values, validates platform parity
 
