@@ -10,7 +10,8 @@ A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) plugin that audi
 ## Install
 
 ```bash
-claude plugin add Terryc21/workflow-audit
+claude plugin marketplace add Terryc21/workflow-audit
+claude plugin install workflow-audit
 ```
 
 ## Included Skills
@@ -59,7 +60,8 @@ Findings are rated using a standardized table format with Urgency, Risk, ROI, Bl
 Want all 22 Xcode development skills (testing, debugging, refactoring, release prep, security audit, and more)?
 
 ```bash
-claude plugin add Terryc21/xcode-workflow-skills
+claude plugin marketplace add Terryc21/xcode-workflow-skills
+claude plugin install xcode-workflow-skills
 ```
 
 ## License
