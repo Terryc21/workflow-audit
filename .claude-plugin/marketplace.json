@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "workflow-audit",
+  "description": "SwiftUI workflow audit — find dead ends, broken promises, and UX friction",
+  "owner": {
+    "name": "Terry Nyberg"
+  },
+  "plugins": [
+    {
+      "name": "workflow-audit",
+      "description": "3-skill audit pipeline: workflow-audit + rating-system + plan",
+      "version": "1.0.0",
+      "author": {
+        "name": "Terry Nyberg"
+      },
+      "source": "./",
+      "category": "development",
+      "homepage": "https://github.com/Terryc21/workflow-audit",
+      "license": "MIT"
+    }
+  ]
+}

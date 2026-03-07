@@ -1,0 +1,11 @@
+{
+  "name": "workflow-audit",
+  "version": "1.0.0",
+  "description": "SwiftUI workflow audit — find dead ends, broken promises, and UX friction. Includes audit, rating system, and planning skills.",
+  "author": {
+    "name": "Terry Nyberg"
+  },
+  "repository": "https://github.com/Terryc21/workflow-audit",
+  "license": "MIT",
+  "keywords": ["swiftui", "ios", "audit", "workflow", "ux"]
+}
