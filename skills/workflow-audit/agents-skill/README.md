@@ -125,6 +125,19 @@ action: {
 
 If "Export" is available via sheet in one place and navigation in another, users get confused. Standardize.
 
+### 5. Data Integrity
+> Never show mock/hardcoded data when real user data exists.
+
+### 6. Primary Action Visibility
+> The primary action must be visible without scrolling after the user completes the key interaction.
+> Pin Save/Continue/Done buttons outside ScrollView or in toolbar.
+
+### 7. Escape Hatch
+> Every view must have a visible way to go forward OR back. Cancel alone is not enough after completing a step.
+
+### 8. Gesture Discoverability
+> Every action available via gesture (swipe, long-press) should also be accessible via a visible button or menu.
+
 ## Files in This Skill
 
 ```
@@ -158,8 +171,8 @@ workflow-audit-skill/
 | Severity | User Impact | Example |
 |----------|-------------|---------|
 | 🔴 **Critical** | Cannot complete goal, fake data | Dead end, mock data, placeholder AI |
-| 🟠 **High** | Extra steps, missing data, broken platform | Unwired data, platform parity gap |
-| 🟡 **Medium** | Friction but completable | Intermediate picker, simplified logic |
+| 🟠 **High** | Extra steps, missing data, broken platform | Unwired data, buried buttons, dismiss traps, platform parity gap |
+| 🟡 **Medium** | Friction but completable | Gesture-only actions, loading traps, intermediate picker |
 | 🟢 **Low** | Minor polish | Inconsistent wording, missing feedback |
 
 ## Integration with Other Audits
@@ -177,6 +190,35 @@ Re-run this audit when:
 - Refactoring sheet/navigation management
 - Users report "I can't find X" issues
 - Major version updates
+
+---
+
+## Cautionary Note: AI-Powered Audit Plugins
+
+**Plugins like `workflow-audit` are tools, not oracles.**
+
+These plugins systematically scan your codebase using pattern matching and heuristics. They can surface real issues you'd miss manually — but they have inherent limitations:
+
+**What they're good at:**
+- Finding structural inconsistencies (orphaned code, missing handlers, type mismatches)
+- Catching patterns that compile but fail silently at runtime
+- Enforcing consistency across platforms (iOS vs macOS parity)
+- Providing a repeatable, systematic checklist
+
+**What they can miss:**
+- Business logic correctness — a plugin can verify a button exists, not that it does the right thing
+- User experience nuance — "buried" is a judgment call that depends on content height, screen size, and context
+- False positives — code flagged as "orphaned" may be intentionally retained for future use
+- False negatives — novel bug patterns not covered by existing checks won't be detected
+
+**How to use them responsibly:**
+- Treat findings as leads to investigate, not verdicts to act on blindly
+- Verify critical findings manually before committing fixes
+- Expect the plugin to evolve — today's checks won't catch tomorrow's new patterns
+- Don't assume a clean audit means zero issues; it means zero *known-pattern* issues
+- Review the skill's detection patterns periodically to understand what it actually checks vs what you assume it checks
+
+**Bottom line:** An audit plugin replaces neither testing nor human review. It's a force multiplier for the reviewer, not a replacement.
 
 ## License
 
