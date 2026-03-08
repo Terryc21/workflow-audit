@@ -51,7 +51,7 @@ The workflow audit uses a 5-layer approach:
 
 1. **Pattern Discovery** — Scans for sheet triggers, navigation links, promotion cards, and context menus to build an entry point inventory
 2. **Flow Tracing** — Traces critical user paths from entry to completion, documenting each step
-3. **Issue Detection** — 16 categories including dead ends, buried buttons, dismiss traps, gesture-only actions, loading traps, mock data, and more
+3. **Issue Detection** — 20 categories including dead ends, buried buttons, dismiss traps, context dropping, notification fragility, sheet asymmetry, stale context, gesture-only actions, loading traps, mock data, and more. 12 automated grep-based checks with regression canaries.
 4. **Semantic Evaluation** — Evaluates from the user's perspective: discoverability, efficiency, feedback, recovery
 5. **Data Wiring** — Verifies features use real data, checks for mock/hardcoded values, validates platform parity
 
