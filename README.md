@@ -55,7 +55,7 @@ The workflow audit uses a 5-layer approach:
 4. **Semantic Evaluation** — Evaluates from the user's perspective: discoverability, efficiency, feedback, recovery
 5. **Data Wiring** — Verifies features use real data, checks for mock/hardcoded values, validates platform parity
 
-Findings are rated using a standardized table format with Urgency, Risk, ROI, Blast Radius, and Fix Effort columns.
+Findings are rated using a standardized table format with Urgency, Risk, ROI, Blast Radius, and Fix Effort columns. Tables adapt to terminal width — narrow terminals get a compact view with the full table in the report file.
 
 ## Full Plugin
 
