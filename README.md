@@ -95,6 +95,15 @@ These plugins systematically scan your codebase using pattern matching and heuri
 
 **Bottom line:** An audit plugin replaces neither testing nor human review. It's a force multiplier for the reviewer, not a replacement.
 
+## How It Works
+
+For how Workflow Audit differs from pattern-based tools (linters, compiler warnings, code review), and how it pairs with [Bug Prospector](https://github.com/Terryc21/bug-prospector), see [How It Works](docs/HOW_IT_WORKS.md).
+
+## See Also
+
+- [Bug Prospector](https://github.com/Terryc21/bug-prospector) — Find bugs that pattern-based scanners miss
+- [Xcode Workflow Skills](https://github.com/Terryc21/xcode-workflow-skills) — Full 22-skill suite (includes both)
+
 ## License
 
 MIT
