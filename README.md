@@ -159,7 +159,7 @@ These plugins systematically scan your codebase using pattern matching and heuri
 
 ## License
 
-MIT
+Apache-2.0. See [LICENSE](LICENSE).
 
 ## Author
 
