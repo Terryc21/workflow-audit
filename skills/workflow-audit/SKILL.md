@@ -96,6 +96,7 @@ For templates and examples:
 | Permission Denied Dead End  | 🟡 HIGH     | Denied with no path to Settings               |
 | Modal Stacking              | 🟡 HIGH     | Multiple sheets/alerts stacked                |
 | Nav Container Mismatch      | 🟡 HIGH     | Selection tag invalid for current container   |
+| Invisible Control           | 🟡 HIGH     | Wired and placed, but no visible boundary     |
 | Two-Step Flow               | 🟢 MEDIUM   | Intermediate selection required               |
 | Missing Feedback            | 🟢 MEDIUM   | No confirmation of success                    |
 | Gesture-Only Action         | 🟢 MEDIUM   | Only accessible via swipe/long-press          |
@@ -379,7 +380,7 @@ file_timestamps:
 issues:
   - id: <sequential number>
     finding: "<description>"
-    category: <dead_end|wrong_destination|mock_data|destructive_no_confirm|silent_state_reset|incomplete_navigation|missing_activation|unwired_data|platform_gap|promise_scope_mismatch|buried_primary_action|dismiss_trap|context_dropping|notif_nav_fragility|sheet_asymmetry|empty_state_missing|error_recovery_missing|keyboard_obscures|permission_dead_end|modal_stacking|nav_container_mismatch|two_step_flow|missing_feedback|gesture_only_action|loading_state_trap|stale_nav_context|phantom_touch_target|race_condition_ux|invisible_selection|inconsistent_pattern|orphaned_code|double_nested_nav>
+    category: <dead_end|wrong_destination|mock_data|destructive_no_confirm|silent_state_reset|incomplete_navigation|missing_activation|unwired_data|platform_gap|promise_scope_mismatch|buried_primary_action|dismiss_trap|context_dropping|notif_nav_fragility|sheet_asymmetry|empty_state_missing|error_recovery_missing|keyboard_obscures|permission_dead_end|modal_stacking|nav_container_mismatch|two_step_flow|missing_feedback|gesture_only_action|loading_state_trap|stale_nav_context|phantom_touch_target|invisible_control|race_condition_ux|invisible_selection|inconsistent_pattern|orphaned_code|double_nested_nav>
     urgency: <critical|high|medium|low>
     risk_fix: <critical|high|medium|low>
     risk_no_fix: <critical|high|medium|low>
@@ -443,13 +444,13 @@ evaluation_matrix:
     recovery: 5
 
 checks_performed:
-  categories_scanned:   # all 32 category keys
+  categories_scanned:   # all 33 category keys
     - dead_end
     - wrong_destination
     - mock_data
     - destructive_no_confirm
     - silent_state_reset
-    # ... (all 32)
+    # ... (all 33)
   persona_evaluation: true
   personas_defined: <count>
 ```

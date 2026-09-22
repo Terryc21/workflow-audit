@@ -4,6 +4,52 @@ All notable changes to workflow-audit are documented here.
 
 ---
 
+## 2026-09-21 — v3.1.0
+
+New detection category: **Invisible Control** (#33). A control that is correctly wired
+and correctly placed, but renders with no visible boundary — so the user cannot tell it
+is a control.
+
+- **Why the existing 32 could not catch it.** Every one asks a structural question: does
+  the wiring exist, does it lead somewhere, is the control reachable. An invisible control
+  passes all of them — it is a real `Button`, it fires a real action, it is not below the
+  fold, it is not gesture-only. The defect is entirely in the rendered pixels while the
+  code reads as correct. Phantom Touch Target (#29) is the inverse case: looks tappable,
+  is not.
+
+- **Detection is a luminance delta, not a pattern match.** Identify each styled control
+  surface, identify the surface *behind* it, and compare relative luminance. A fill within
+  ~0.05 of its background with no border and no shadow is a finding; so is a foreground
+  below WCAG 4.5:1 against its own fill.
+
+- 🛑 **A system button style is not a guarantee.** `.buttonStyle(.bordered)` is idiomatic
+  and documented, and on macOS its fill can resolve to the same luminance as the window
+  ground in light appearance — zero delta, faint border, no visible body. The category
+  states explicitly that "it uses a real button style" is not evidence of visibility.
+
+- ⚠️ **Both appearances must be checked.** A pair that contrasts in dark can be identical
+  in light. A single-appearance check finds half the cases and reports confidence it has
+  not earned.
+
+- ⚠️ **A render harness is not the real surface.** Drawing the control on a test sheet can
+  pass a defect the production ground fails, because the harness background is not the
+  background.
+
+- **Accessibility interaction noted.** Where a project forbids low-opacity category tints
+  (common when red–green discrimination cannot be relied on), a "muted tint" fix for an
+  invisible control reintroduces the accessibility problem. The category directs fixes
+  toward shape and boundary rather than hue.
+
+Origin: a real audit passed a set of controls as structurally sound while four of them
+were, on the running app, indistinguishable from their background. The audit was correct
+on every question it asked. This category is the question it was not asking.
+
+Updated: `SKILL.md` (category table, handoff enum, persona-handoff key count),
+`agents/layer3-issue-detection.md` (Category 33 with patterns and procedure),
+`agents-skill/issue-categories.md` (numbered summary).
+
+---
+
 ## 2026-08-06 — v3.0.3
 
 One-line fix to the Layer 1 boolean-state pattern introduced in v3.0.1, caught by a second

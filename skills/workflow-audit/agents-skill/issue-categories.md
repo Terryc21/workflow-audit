@@ -500,6 +500,7 @@ The following categories were added to align with ui-path-radar's detection cove
 | 30   | Race Condition UX           | 🟢 MEDIUM   | Conflicting ops triggered                |
 | 31   | Invisible Selection         | 🟢 MEDIUM   | Selected but no indicator                |
 | 32   | Double-Nested Nav           | ⚪ LOW      | NavStack inside NavStack                 |
+| 33   | Invisible Control           | 🟡 HIGH     | Wired + placed, but no visible boundary  |
 
 ## Issue Documentation Template
 

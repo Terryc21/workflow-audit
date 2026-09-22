@@ -992,6 +992,84 @@ NavigationStack {
 
 **Severity:** ⚪ LOW (double nav bar, confusing back button behavior)
 
+### Category 33: Invisible Control
+
+A control is correctly wired and correctly placed, but renders with no visible
+boundary — so the user cannot tell it is a control. The inverse of Phantom Touch
+Target (Category 29), which looks tappable and is not.
+
+🛑 **Why the other 32 categories cannot catch this.** Every one of them asks a
+*structural* question: does the wiring exist, does it lead somewhere, is the
+control reachable. An invisible control passes all of them. It is a real
+`Button`, it fires a real action, it is not below the fold, it is not behind a
+gesture. The defect is entirely in what the pixels do, and the code reads as
+correct.
+
+**Detection patterns:**
+```swift
+// ❌ A fill that resolves to the same value as the surface behind it.
+//    Check the SYSTEM COLOR, not the call site: some semantic colors are
+//    documented as "control background" yet measure identical to the window
+//    ground in one appearance.
+.background(Color(nsColor: .controlColor))      // vs .windowBackgroundColor
+.background(Color(.systemBackground))           // on a systemBackground parent
+
+// ❌ A category tint below ~0.5 alpha carrying the only boundary
+.background(Color.accentColor.opacity(0.3))     // no border, no shape
+.background(.quaternary.opacity(0.3))
+
+// ❌ A foreground whose contrast against its OWN fill is unmeasured.
+//    Destructive red on a mid-tone fill is the common case.
+.foregroundStyle(.red)                          // on a tinted control fill
+```
+
+**Safe patterns (do NOT flag):**
+```swift
+// ✅ Fill plus an explicit border — the border carries the boundary even when
+//    the fill is close to the ground
+.background(fill)
+.overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(.separator, lineWidth: 1))
+
+// ✅ A system style the platform draws a boundary for, on a surface where it
+//    actually contrasts. `.bordered` is NOT automatically safe — see below.
+.buttonStyle(.borderedProminent)
+```
+
+**How to detect programmatically:**
+
+1. Inventory every styled control surface: `.background(`, `.buttonStyle(`,
+   `.foregroundStyle(` on interactive views.
+2. For each, identify the **surface behind it** — the enclosing card modifier,
+   sheet ground, or window background.
+3. Compute relative luminance for both and take the delta. A fill within ~0.05
+   of its background, with no `.overlay` border and no `.shadow`, is a finding.
+4. Do the same for foreground vs fill, against the WCAG 4.5:1 body-text
+   threshold.
+5. ⚠️ **Check BOTH appearances.** A pair that contrasts in dark can be identical
+   in light, and vice versa — a single-appearance check finds half the cases and
+   reports confidence it has not earned.
+
+🛑 **A system button style is not a guarantee.** `.buttonStyle(.bordered)` is a
+documented, idiomatic control style, and on macOS its fill can resolve to the
+same luminance as the window ground in light appearance — zero delta, faint
+border, no visible body. "It uses a real button style" is therefore not evidence
+that the control is visible. Measure the pair.
+
+⚠️ **A render harness is not a substitute for the real surface.** Drawing the
+control on a test sheet and eyeballing it will pass a defect that the production
+ground fails, because the harness background is not the background. If verifying
+by rendering, render on the actual parent surface.
+
+**Severity:** 🟡 HIGH when a primary or frequently-used action is affected
+(the user cannot find the control at all) · 🟢 MEDIUM for secondary controls
+where a sibling control provides a visible alternative.
+
+**Accessibility interaction:** when a project's palette rules forbid low-opacity
+category tints — common where a maintainer or user base cannot rely on
+red–green discrimination — this category and that rule reinforce each other. A
+"muted tint" fix for an invisible control reintroduces the accessibility
+problem. Prefer shape and boundary over hue.
+
 ## Detection Process
 
 ### Step 1: Entry Point Audit
