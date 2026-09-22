@@ -76,7 +76,7 @@ Five passes, each runnable on its own:
 |---|---|---|
 | 1 | **Discovery** | Every way into a feature — and anything with no way in |
 | 2 | **Flow tracing** | Where each path actually leads, step by step |
-| 3 | **Issue detection** | 32 kinds of problem: dead ends, screens that won't close, buttons below the fold, spinners with no timeout, fake data left in |
+| 3 | **Issue detection** | 33 kinds of problem: dead ends, screens that won't close, buttons below the fold, spinners with no timeout, fake data left in |
 | 4 | **How it feels** | Can a new user find this? How many taps? Did anything confirm it worked? Can they back out? |
 | 5 | **Real data** | Features that look finished but read from a placeholder nobody replaced |
 
@@ -127,8 +127,13 @@ It reads your code; it doesn't run it. So it won't find:
 
 - **Wrong-but-reachable.** It can tell you a button exists, that people can reach it, that its
   handler runs and reads real data. It cannot tell you the handler does the right thing.
+- **Correct code, wrong pixels.** A control can be wired right, placed right, and still be
+  invisible or unreadable on screen. v3.1.0 catches the common case by comparing a control's
+  fill against the surface behind it (Invisible Control), but that is a measurement of declared
+  colors, not of what the compositor actually drew. If a control looks wrong to you and the
+  audit says it is fine, trust your eyes.
 - **Anything that only happens at runtime** — timing problems, memory pressure, animation glitches.
-- **Problems nobody has described yet.** A clean audit means none of the 32 known kinds. New
+- **Problems nobody has described yet.** A clean audit means none of the 33 known kinds. New
   shapes get added in later releases.
 - **Whether your design is any good.** It flags a button that looks buried; whether that's
   actually a problem is your call.

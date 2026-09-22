@@ -37,7 +37,7 @@ three actions, this action leads somewhere else. Every step gets a file and line
 
 ### 3. Issue detection — `/workflow-audit layer3`
 
-Checks 32 kinds of problem. Among them:
+Checks 33 kinds of problem. Among them:
 
 - **Dead ends** — you arrive somewhere with nothing to do and no way back
 - **Dismiss traps** — a screen opens with no way to close it
@@ -48,8 +48,10 @@ Checks 32 kinds of problem. Among them:
 - **Loading with no timeout** — a spinner that can spin forever
 - **Fake data in a shipping build**
 - **Platform gaps** — works on iPhone, quietly missing on Mac
+- **Invisible controls** — a real button whose fill matches the surface behind it, so it
+  reads as plain text. Wired correctly, placed correctly, and still unfindable
 
-Fourteen of the 32 are automatic searches with tests to stop them silently breaking. The rest
+Fourteen of the 33 are automatic searches with tests to stop them silently breaking. The rest
 work by listing everything that should be right, then checking each one.
 
 ### 4. Semantic evaluation — `/workflow-audit layer4`
