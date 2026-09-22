@@ -1039,10 +1039,45 @@ correct.
 
 1. Inventory every styled control surface: `.background(`, `.buttonStyle(`,
    `.foregroundStyle(` on interactive views.
-2. For each, identify the **surface behind it** — the enclosing card modifier,
+2. For each, **resolve the surface behind it** — the enclosing card modifier,
    sheet ground, or window background.
+
+   🛑 **A finding requires a RESOLVED ground. Absence of evidence is not a bare
+   background.** This is the step that decides whether the category is usable,
+   and the obvious implementation is the wrong one: a fixed-size textual
+   look-back for a container modifier. Measured on one real codebase, a 45-line
+   look-back over 120 `.buttonStyle(.bordered)` sites flagged 84 — and **45 of
+   those 84 had a container modifier further up the same file**, outside the
+   window. 54% of the flags were artifacts of the window size, not of any
+   measurement.
+
+   A ground counts as resolved when you can name it: a container modifier found
+   by walking the *whole* enclosing view body, an explicit `.background(...)` at
+   the call site, or a parent view you have actually read. It is NOT resolved
+   because a look-back returned nothing.
+
+   ⚠️ **A container can live in a parent view in another file**, which no
+   textual search reaches. That case is permanently unresolvable by a
+   source-reading scan, and saying so is more useful than guessing.
+
 3. Compute relative luminance for both and take the delta. A fill within ~0.05
    of its background, with no `.overlay` border and no `.shadow`, is a finding.
+
+   ⚠️ **Only a resolved ground can produce a `verified` finding.** The ground you
+   named IS the work receipt this skill already requires (see `radar-suite-core.md`
+   § Work Receipts): cite the container's `file:line` alongside the two luminance
+   values. No named ground means no receipt, which means `probable` at best —
+   and an unresolved ground is not even that, because nothing was measured.
+   Report unresolved sites as a **count** ("N sites: ground not determined"),
+   never as rows in the findings table.
+
+   A category that promotes unresolved sites to findings will be ~70% noise on
+   first contact, and a new detection category gets exactly one first impression.
+
+   The threshold itself is not delicate. On the measured population the real
+   case sat at delta **0.000** and the nearest benign case at **0.139**, so
+   anything from 0.02 to 0.07 produces identical verdicts. If findings look
+   wrong, suspect step 2, not this number.
 4. Do the same for foreground vs fill, against the WCAG 4.5:1 body-text
    threshold.
 5. ⚠️ **Check BOTH appearances.** A pair that contrasts in dark can be identical

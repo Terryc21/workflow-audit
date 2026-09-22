@@ -18,9 +18,25 @@ is a control.
   is not.
 
 - **Detection is a luminance delta, not a pattern match.** Identify each styled control
-  surface, identify the surface *behind* it, and compare relative luminance. A fill within
+  surface, resolve the surface *behind* it, and compare relative luminance. A fill within
   ~0.05 of its background with no border and no shadow is a finding; so is a foreground
   below WCAG 4.5:1 against its own fill.
+
+- 🛑 **A finding requires a RESOLVED ground — absence of evidence is not a bare
+  background.** This was calibrated against a real population before release, and the
+  obvious implementation turned out to be the wrong one. A 45-line textual look-back over
+  120 `.buttonStyle(.bordered)` sites flagged 84, and **45 of those 84 had a container
+  modifier further up the same file**, outside the window: 54% of the flags were artifacts
+  of the window size rather than of any measurement. The category now requires that the
+  ground be nameable — a container found by walking the whole enclosing view body, an
+  explicit `.background(...)` at the call site, or a parent view actually read — and that
+  name doubles as the Work Receipt the skill already mandates. Unresolved sites are
+  reported as a count, never as rows in the findings table.
+
+- **The threshold is not the delicate part.** On the calibrated population the real case
+  sat at delta 0.000 and the nearest benign case at 0.139, so anything from 0.02 to 0.07
+  gives identical verdicts. The category says so, and tells a reader who sees wrong
+  findings to suspect the ground-resolution step instead.
 
 - 🛑 **A system button style is not a guarantee.** `.buttonStyle(.bordered)` is idiomatic
   and documented, and on macOS its fill can resolve to the same luminance as the window
